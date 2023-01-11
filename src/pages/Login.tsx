@@ -11,7 +11,7 @@ export const Login = () => {
   let User = localStorage.getItem('User');
 
   useEffect(() => {
-    User && navigate('/');
+    User && navigate('/marvel');
   }, []);
   
   return (
@@ -27,7 +27,7 @@ export const Login = () => {
         onSubmit={async (data, { setSubmitting }) => {
           setSubmitting(true);
           localStorage.setItem('User', JSON.stringify(data));
-          navigate('/');
+          navigate('/marvel');
           setSubmitting(false);
         }}>
         {({ isValid, isSubmitting, setFieldValue, values }) => (

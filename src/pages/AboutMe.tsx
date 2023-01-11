@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Profile from '../assets/profile.png';
+import Profile from '/profile.png';
 
 export const AboutMe = () => {
   const navigate = useNavigate();

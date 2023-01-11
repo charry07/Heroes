@@ -39,6 +39,21 @@ export const AppBarMenu = (props: any) => {
     navigate('/Login');
   };
 
+  const onClickMarvel = () => {
+    props.isMarvel(true);
+    navigate('/marvel');
+  };
+  const onClickDC = () => {
+    props.isMarvel(false);
+    navigate('/dc');
+  };
+  const onClickDev = () => {
+    props.isMarvel(true);
+    navigate('/marvel');
+  };
+
+
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -62,31 +77,31 @@ export const AppBarMenu = (props: any) => {
   );
 
   return location.pathname !== '/Login' ? (
-    <Box sx={{ flexGrow: 1, bgColor: 'red' }}>
-      <AppBar position='static'>
+    <Box sx={{ flexGrow: 1, background: 'yellow' }}>
+      <AppBar position='static' color='secondary'>
         <Toolbar>
           {location.pathname === '/AboutMe' ? (
-            <IconButton size='large' edge='start' color='inherit' aria-label='open drawer' onClick={() => navigate('/')} sx={{ mr: 2 }}>
+            <IconButton size='large' edge='start' color='inherit' aria-label='open drawer' onClick={onClickDev} sx={{ mr: 2 }}>
               <ArrowBackIcon />
             </IconButton>
           ) : null}
-          <Typography variant='h6' onClick={() => navigate('/')} sx={{ display: { xs: 'none', sm: 'flex' }, cursor: 'pointer' , mr:1 }}>
+          <Typography variant='h6' onClick={onClickDev} sx={{ display: { xs: 'none', sm: 'flex' }, cursor: 'pointer', mr: 1 }}>
             ACharryDev
           </Typography>
 
-          {location.pathname === '/' ? (
+          {location.pathname === '/' || location.pathname === '/marvel' || location.pathname === '/dc' ? (
             <>
-              <MenuItem onClick={() => props.isMarvel(true)}>
+              <MenuItem onClick={onClickMarvel}>
                 <Typography textAlign='center'>Marvel</Typography>
               </MenuItem>
-              <MenuItem onClick={() => props.isMarvel(false)}>
+              <MenuItem onClick={onClickDC}>
                 <Typography textAlign='center'>DC</Typography>
               </MenuItem>
             </>
           ) : null}
 
           <SearchBar inputSearch={(e: string) => props.inputSearch(e)} />
-          <Box sx={{ mr:1 }} />
+          <Box sx={{ mr: 1 }} />
           <Box sx={{ display: 'flex' }}>
             <IconButton size='large' edge='end' aria-label='account of current user' aria-controls={menuId} aria-haspopup='true' onClick={handleProfileMenuOpen} color='inherit'>
               <AccountCircle />

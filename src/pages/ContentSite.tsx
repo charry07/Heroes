@@ -20,7 +20,7 @@ export const ContentSite = (props: any) => {
     try {
       isMarvel && axios.get(props.inputSearch ? urlMarvelSearch : urlmarvel).then(({ data }) => setData(data.data.results));
       !isMarvel &&
-        axios.get('/heroes.json').then(({ data }) => {
+        axios.get('./heroes.json').then(({ data }) => {
           let heroes = data.results.map((hero: any) => ({
             id: hero.id,
             name: hero.name,
@@ -49,7 +49,7 @@ export const ContentSite = (props: any) => {
       </Typography>
       <Grid container>
         {data.map((item: any) => (
-          <Grid item xs={12} sm={4} xl={2} key={item.id}>
+          <Grid item xs={12} sm={4} xl={2} key={item.id} >
             <CardComponent data={item} isMarvel={isMarvel} />
           </Grid>
         ))}
