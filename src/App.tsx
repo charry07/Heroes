@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { AppBarMenu, Footer } from './components';
@@ -11,31 +12,38 @@ function App() {
     email: 'cambio@gmail.com',
     password: 'cambio',
   };
+
+  const navigate = useNavigate();
   const [inputSearch, setInputSearch] = useState('');
   const [isMarvel, setIsMarvel] = useState(true);
-  const navigate = useNavigate();
+  let User = localStorage.getItem('User');
 
   useEffect(() => {
-    location.pathname == '/' && navigate('/marvel');
-    location.pathname !== '/dc' ? setIsMarvel(true) : setIsMarvel(false);
+    !User && navigate('/Login');
+
+    location.pathname == '/' && navigate('/Marvel');
+    location.pathname !== '/DC' ? setIsMarvel(true) : setIsMarvel(false);
   }, []);
 
   return (
     <>
       <UserContext.Provider value={user}>
         <AppBarMenu isMarvel={(e: any) => setIsMarvel(e)} inputSearch={(e: string) => setInputSearch(e)} />
-        <Routes>
-          <Route path='/' element={<ContentSite inputSearch={inputSearch} isMarvel={isMarvel} />} />
-          <Route path='/marvel' element={<ContentSite inputSearch={inputSearch} isMarvel={isMarvel} />} />
-          <Route path='/dc' element={<ContentSite inputSearch={inputSearch} isMarvel={isMarvel} />} />
-          <Route path='/Series-Peliculas' element={<ContentSite inputSearch={inputSearch} isMarvel={isMarvel} />} />
-          <Route path='/Login' element={<Login />} />
-          <Route path='/AboutMe' element={<AboutMe />} />
-          <Route path='/Profile' element={<Profile />} />
-          <Route path='/Page404' element={<Page404 />} />
-          {/* 404 No se Encontro la pagina */}
-          {/* <Route path='/*' element={<Navigate to='/Page404' />} /> */}
-        </Routes>
+        <Box sx={{ position: 'relative', minHeight: '80vh', flexDirection: 'column', display: 'flex' }}>
+          <Routes>
+            <Route path='/' element={<ContentSite inputSearch={inputSearch} isMarvel={isMarvel} />} />
+            <Route path='/Marvel' element={<ContentSite inputSearch={inputSearch} isMarvel={isMarvel} />} />
+            <Route path='/DC' element={<ContentSite inputSearch={inputSearch} isMarvel={isMarvel} />} />
+            <Route path='/Series-Peliculas' element={<ContentSite inputSearch={inputSearch} isMarvel={isMarvel} />} />
+            <Route path='/Login' element={<Login />} />
+            <Route path='/AboutMe' element={<AboutMe />} />
+            <Route path='/Profile' element={<Profile />} />
+            <Route path='/Page404' element={<Page404 />} />
+            {/* 404 No se Encontro la pagina */}
+            {/* <Route path='/*' element={<Navigate to='/Page404' />} /> */}
+          </Routes>
+        </Box>
+
         <Footer />
       </UserContext.Provider>
     </>

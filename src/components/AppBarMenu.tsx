@@ -41,15 +41,15 @@ export const AppBarMenu = (props: any) => {
 
   const onClickMarvel = () => {
     props.isMarvel(true);
-    navigate('/marvel');
+    navigate('/Marvel');
   };
   const onClickDC = () => {
     props.isMarvel(false);
-    navigate('/dc');
+    navigate('/DC');
   };
   const onClickDev = () => {
     props.isMarvel(true);
-    navigate('/marvel');
+    navigate('/Marvel');
   };
 
 
@@ -80,7 +80,7 @@ export const AppBarMenu = (props: any) => {
     <Box sx={{ flexGrow: 1, background: 'yellow' }}>
       <AppBar position='static' color='secondary'>
         <Toolbar>
-          {location.pathname === '/AboutMe' ? (
+          {location.pathname === '/AboutMe' || location.pathname === '/Profile' ? (
             <IconButton size='large' edge='start' color='inherit' aria-label='open drawer' onClick={onClickDev} sx={{ mr: 2 }}>
               <ArrowBackIcon />
             </IconButton>
@@ -89,7 +89,7 @@ export const AppBarMenu = (props: any) => {
             ACharryDev
           </Typography>
 
-          {location.pathname === '/' || location.pathname === '/marvel' || location.pathname === '/dc' ? (
+          {location.pathname === '/' || location.pathname === '/Marvel' || location.pathname === '/DC' ? (
             <>
               <MenuItem onClick={onClickMarvel}>
                 <Typography textAlign='center'>Marvel</Typography>

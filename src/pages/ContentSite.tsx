@@ -6,7 +6,8 @@ import { CardComponent } from '../components';
 
 export const ContentSite = (props: any) => {
   const [data, setData] = useState([] as any);
-  const [isMarvel, setIsMarvel] = useState(true);
+  const [isMarvel, setIsMarvel] = useState(props.isMarvel);
+  const [loading, setLoanding] = useState(true);
 
   const API_KEY: string = 'bf189abaaefb6da6ddfacdea4e2679ba&hash=34eb24df5bfb7ab561811a504339d769';
   const urlmarvel: string = `https://gateway.marvel.com:443/v1/public/characters?limit=30&ts=1&apikey=${API_KEY}`;
@@ -14,7 +15,29 @@ export const ContentSite = (props: any) => {
 
   const navigate = useNavigate();
   let User = localStorage.getItem('User');
-  !User && navigate('/Login');
+
+  const loader = (
+    <Box
+      sx={{
+        width: '80px',
+        height: '80px',
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        marginTop: '-50px',
+        marginLeft: '-50px',
+        borderRadius: '50%',
+        border: '10px solid purple',
+        borderTopColor: 'transparent',
+        animation: 'spin 1.2s linear infinite',
+        '@keyframes spin': {
+          to: {
+            transform: 'rotate(360deg)',
+          },
+        },
+      }}
+    />
+  );
 
   useEffect(() => {
     try {
@@ -35,6 +58,10 @@ export const ContentSite = (props: any) => {
     } catch (error) {
       console.log(error);
     }
+    !User && navigate('/Login');
+    location.pathname === '/DC' && setIsMarvel(false);
+    setLoanding(true);
+    setTimeout(() => setLoanding(false), 500);
     return () => {};
   }, [props.inputSearch, isMarvel]);
 
@@ -42,18 +69,27 @@ export const ContentSite = (props: any) => {
     setIsMarvel(props.isMarvel);
   }, [props.isMarvel]);
 
-  return User ? (
-    <Box>
+  return data != 0 ? (
+    <>
       <Typography variant='h3' sx={{ m: 1 }}>
         {isMarvel ? 'Marvel' : 'DC comics'}
       </Typography>
-      <Grid container>
-        {data.map((item: any) => (
-          <Grid item xs={12} sm={4} xl={2} key={item.id} >
-            <CardComponent data={item} isMarvel={isMarvel} />
-          </Grid>
-        ))}
-      </Grid>
-    </Box>
-  ) : null;
+
+      {loading ? (
+        loader
+      ) : (
+        <Grid container>
+          {data.map((item: any) => (
+            <Grid item xs={12} sm={4} xl={2} key={item.id}>
+              <CardComponent data={item} isMarvel={isMarvel} />
+            </Grid>
+          ))}
+        </Grid>
+      )}
+    </>
+  ) : (
+    <Typography variant='h3' sx={{ position: 'absolute', top: '50%', left: '35%', marginTop: '-50px', marginLeft: '-100px' }}>
+      No se encontraron resultados !
+    </Typography>
+  );
 };
