@@ -20,8 +20,8 @@ function App() {
 
   useEffect(() => {
     !User && navigate('/Login');
-
     location.pathname == '/' && navigate('/Marvel');
+    location.pathname == '/Heroes' && navigate('/Marvel');
     location.pathname !== '/DC' ? setIsMarvel(true) : setIsMarvel(false);
   }, []);
 
